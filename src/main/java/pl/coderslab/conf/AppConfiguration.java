@@ -24,7 +24,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"pl.coderslab.dao", "pl.coderslab.controller"})
+@ComponentScan(basePackages = {"pl.coderslab.beans", "pl.coderslab.controller"})
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "pl.coderslab.repository")
 public class AppConfiguration extends WebMvcConfigurerAdapter {

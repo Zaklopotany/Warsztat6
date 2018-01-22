@@ -25,4 +25,27 @@ textarea {
     padding: 20px;
     width: 100%;
     height: auto;
+    margin-bottom:1em;
 }
+
+#comments {
+    border-radius: 25px;
+    background: #4fd1cc;
+    padding: 20px;
+    width: 60%;
+    height: auto;
+    margin-bottom:1em;
+    float:right;
+}
+#addComment {
+    border-radius: 25px;
+    background: #65acd8;
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    margin-bottom:1em;
+}
+
+
+
+

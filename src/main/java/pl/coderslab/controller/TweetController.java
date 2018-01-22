@@ -11,32 +11,45 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 
+import pl.coderslab.entity.Comments;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
+import pl.coderslab.repository.CommentsRepository;
 import pl.coderslab.repository.TweetRepository;
+import pl.coderslab.repository.UserRepository;
 
 @Controller
 @RequestMapping("/tweet")
 public class TweetController {
 	@Autowired
 	private TweetRepository tweetRep;
-	
+	@Autowired
+	private CommentsRepository commentsRep;
+	@Autowired
+	private UserRepository userRep;
+	//get tweet list
 	@ModelAttribute("tweetList")
 	public List<Tweet> loadAllTweets(){
 		return tweetRep.orderListTweet();
 	}
+	
+	//show all tweets on main page
 	@GetMapping("/showAll")
-	public String showAllTweets(@SessionAttribute(name = "user", required = false) User user1) {
+	public String showAllTweets(@SessionAttribute(name = "user", required = false) User user1, Model model) {
 		if(user1 == null) {
-			return "redirect:/uset/login";
+			return "redirect:/user/login";
 		}
-		ModelAndViewDefiningException//doko
+		model.addAttribute("tweetList", loadAllTweets());
+		model.addAttribute("user", user1);
+		model.addAttribute("tweet", new Tweet());		
+		return "app/mainPage";
 	}
+	//form post method add tweet
 	@PostMapping("addTweet")
 	public String getTeet(@Valid Tweet tweet, BindingResult result, @SessionAttribute(name = "user", required = false) User user1, Model model) {
 		if(user1 == null) {
@@ -52,7 +65,7 @@ public class TweetController {
 		model.addAttribute("tweet", new Tweet());
 		return "app/mainPage";
 	}
-	
+	//show logged user tweets 
 	@GetMapping("/userTweets")
 	public String showAllUserTweets(@SessionAttribute(name = "user", required = false) User user1, Model model) {
 		if(user1==null) {
@@ -60,25 +73,48 @@ public class TweetController {
 		}
 		model.addAttribute("tweet", new Tweet());
 		model.addAttribute("user1", user1);
-		model.addAttribute("userTweets", tweetRep.findByUserOrderByCreated(user1));
+		model.addAttribute("userTweets", tweetRep.findByUserOrderByCreatedDesc(user1));
 		return "app/userPage";
 	}
-	
+	//add tweet userPage form
 	@PostMapping("addTweetUser")
 	public String getTweetUser(@Valid Tweet tweet, BindingResult result, @SessionAttribute(name = "user", required = false) User user1, Model model) {
 		if(user1 == null) {
 			return "redirect:/user/login";
 		}
 		if(result.hasErrors()) {
-			return "app/userTweets";
+			return "app/userPage";
 		} else {
 			tweet.setCreated(LocalDateTime.now());
 			tweetRep.save(tweet);
 		}
 		model.addAttribute("user1", user1);
-		model.addAttribute("userTweets", tweetRep.findByUserOrderByCreated(user1));
+		model.addAttribute("userTweets", tweetRep.findByUserOrderByCreatedDesc(user1));
 		model.addAttribute("tweet", new Tweet());
 		return "app/userPage";
 	}
+	//show tweet details tweetDetails.jsp
+	@GetMapping("/details/{id}")
+	public String showTweetDetails(@PathVariable(required = true) Long id, Model model, @SessionAttribute(name = "user", required = false) User user1) {
+		if(user1 == null) {
+			return "redirect:/user/login";
+		}
+		Tweet tweet = tweetRep.findById(id);
+		model.addAttribute("tweet",tweet);
+		model.addAttribute("comments", commentsRep.findByPostIdOrderByCreatedDesc(id));
+		model.addAttribute("comment", new Comments());
+		return "app/tweetDetails";
+	}
 	
+	//redirect to specific user tweets page
+	@GetMapping("/oneUserTweet/{id}")
+	public String showOnlyOneUserTweets(@PathVariable Long id, Model model,@SessionAttribute(name = "user", required = false) User user1) {
+		if(user1 == null) {
+			return "redirect:/user/login";
+		}
+		model.addAttribute("user", userRep.findOne(id));
+		model.addAttribute("tweet", new Tweet());
+		model.addAttribute("tweetList", tweetRep.findByUserId(id));
+		return "app/anyUserTweets";
+	}
 }

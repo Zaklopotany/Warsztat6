@@ -15,6 +15,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<c:set var="align" value="left" />
 	<c:url var="linkForm" value="/tweet/addTweet" />
 	<div id="pageheader" class="jumbotron text-center">
 		<h1>Aplikacja Twitterowa</h1>
@@ -39,10 +40,21 @@
 						<input type="submit" value="Dodaj" />
 					</f:form>
 				</div>
-				<c:forEach items="${tweetList}" var="tl">
-					<br>
-					<div id="rcorners1" class="container-fluid">
-						<a style="float: left"><b>${tl.getUser().getUsername()}</b></a> <a style="float: right">${tl.getCreated().toString().substring(0,19)}</a>
+				<c:forEach items="${tweetList}" var="tl" varStatus="status">
+				<c:if test="${status.index > 0}">
+						<c:if test="${tweetList.get(status.index).getUser().getId() != tweetList.get(status.index - 1).getUser().getId()}">
+							<c:choose>
+								<c:when test="${align eq 'right'}">
+									<c:set var="align" value="left" />								
+								</c:when>
+								<c:otherwise>
+									<c:set var="align" value="right" />
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+				</c:if>
+					<div id="rcorners1" style="float:${align}; width:60%" class="container-fluid">
+						<a style="float: left" href="<c:url value="/tweet/oneUserTweet/${tl.getUser().getId()}"/>"><b>${tl.getUser().getUsername()}</b></a> <a style="float: right">${tl.getCreated().toString().substring(0,19)}</a>
 						<br>
 						<p>${tl.getText()}</p>
 					</div>

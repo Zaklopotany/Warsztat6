@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import pl.coderslab.beans.Encoding;
 import pl.coderslab.entity.Tweet;
@@ -29,15 +28,19 @@ public class UserController {
 	private UserRepository userRepository;
 	@Autowired
 	private TweetRepository tweetRep;
+	
+	//get tweet list
 	@ModelAttribute("tweetList")
 	public List<Tweet> loadAllTweets(){
 		return tweetRep.orderListTweet();
 	}
+
+	//display login window
 	@GetMapping(path = "/login")
 	public String showLoginForm() {
 		return "user/login";
 	}
-
+	//login form, get user - authentication
 	@PostMapping(path = "/login")
 	public String processLoginRequest(@RequestParam("username") String username,
 			@RequestParam("password") String password, Model model, HttpSession ses) {
@@ -50,13 +53,13 @@ public class UserController {
 			return "user/login";
 		}
 	}
-
+	//display register window
 	@GetMapping(path = "/register")
 	public String showRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		return "user/register";
 	}
-
+	//get new user (register form)
 	@PostMapping(path = "/register")
 	public String processRegistartionRequest(@Valid User user, BindingResult bresult, Model model) {
 		if (bresult.hasErrors()) {
@@ -83,13 +86,5 @@ public class UserController {
 		}
 	}
 
-	@GetMapping(path = "/settings/{id}")
-	public String showSuccessSetPage(@SessionAttribute(name = "user", required = false) User user1) {
-		if (user1 == null) {
-			return "redirect:user/login";
-		}
-
-		return "";
-	}
 
 }
