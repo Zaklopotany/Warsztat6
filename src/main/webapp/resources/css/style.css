@@ -1,0 +1,28 @@
+.center {
+    margin: auto;
+    width: 50%;
+    height: 50%;
+    border: 3px solid black;
+    padding: 10px;
+}
+
+.error {
+	background-color: red;
+	color: white;
+}
+#pageheader {
+	background-color:red;
+}
+textarea {
+     width: 100%;
+     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+     box-sizing: border-box;         /* Opera/IE 8+ */
+}
+#rcorners1 {
+    border-radius: 25px;
+    background: #b8e8f9;
+    padding: 20px;
+    width: 100%;
+    height: auto;
+}
