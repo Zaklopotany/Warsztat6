@@ -16,7 +16,7 @@
 
 </head>
 <body>
-<c:url value="/message/sendMessage" var="linkMessage"/>
+<c:url value="/message/sendMessageUnknown" var="linkMessage"/>
 	<t:mainLayout>
 		<jsp:attribute name="submenu">
 			<h3>Akcja</h3>
@@ -28,7 +28,7 @@
 			<div>
 				<h2> Wiadomość do użytkownika: ${message.getUser().getUsername()}</h2>
 				<f:form action="${linkMessage}" method="post" modelAttribute="message">
-					Podaj id odbiorcy <f:input path="user.id"/><br>
+					Podaj id odbiorcy: <f:input path="user.id"/><br>
 					<f:hidden path="sender.id" value="${message.getSender().getId() }"/>
 					<f:textarea path="text"/>
 					<input type="submit" value="Wyślij wiadomość"/>

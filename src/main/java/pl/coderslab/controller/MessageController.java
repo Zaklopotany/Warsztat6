@@ -69,13 +69,16 @@ public class MessageController {
 			return "redirect:/user/login";
 		}
 		model.addAttribute("message", new Message().setSender(user1)); // for binding purpose
-		return "message/sendMessage";
+		return "message/sendMessageUnknown";
 	}
 
 	// get new message validate and send
 	@PostMapping("/sendMessage")
 	public String sendNewMessage(@Valid Message message, BindingResult result, Model model,
 			@SessionAttribute(name = "user", required = false) User user1) {
+		if(user1 == null) {
+			return "redirect:/user/login";
+		}
 		if (result.hasErrors()) {
 			return "message/sendMessage";
 		} else if (message.getUser().getId() == user1.getId()) {
@@ -84,6 +87,28 @@ public class MessageController {
 		} else if (message.getSender().getId() != user1.getId()) {
 			model.addAttribute("userCheat", true);
 			return "message/sendMessage";
+		}
+		model.addAttribute("userError", false);
+		model.addAttribute("userCheat", false);
+		message.setCreated(LocalDateTime.now());
+		messageRep.save(message);
+		return "redirect:/message/showSentMessage";
+	}
+	//get new message from sendMessageUnknown
+	@PostMapping("/sendMessageUnknown")
+	public String sendNewMessageUnknown(@Valid Message message, BindingResult result, Model model,
+			@SessionAttribute(name = "user", required = false) User user1) {
+		if(user1 == null) {
+			return "redirect:/user/login";
+		}
+		if (result.hasErrors()) {
+			return "message/sendMessageUnknown";
+		} else if (message.getUser().getId() == user1.getId()) {
+			model.addAttribute("userError", true);
+			return "message/sendMessageUnknown";
+		} else if (message.getSender().getId() != user1.getId()) {
+			model.addAttribute("userCheat", true);
+			return "message/sendMessageUnknown";
 		}
 		model.addAttribute("userError", false);
 		model.addAttribute("userCheat", false);
@@ -114,7 +139,7 @@ public class MessageController {
 		}
 		String[] parameters = request.getParameterValues("check");
 		String action= request.getParameter("action");
-		if (action != null) {
+		if (parameters != null) {
 			switch (action) {
 			case "delete":
 				for (int i = 0; i< parameters.length; i++) {
@@ -138,7 +163,6 @@ public class MessageController {
 				}
 				break;
 			}
-			
 		}
 		return "redirect:/message/showMailBox";
 	}
@@ -149,7 +173,7 @@ public class MessageController {
 			return "redirect:/user/login";
 		}
 		String[] parameters = request.getParameterValues("check");
-		if(parameters.length > 0) {
+		if(parameters != null) {
 			for(int i =0; i < parameters.length; i++) {
 				Message tempMes = messageRep.findOne(Long.parseLong(parameters[i]));
 				tempMes.setVisibleToSender(false);
