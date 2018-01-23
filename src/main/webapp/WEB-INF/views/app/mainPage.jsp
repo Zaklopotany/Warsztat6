@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -17,19 +18,12 @@
 <body>
 	<c:set var="align" value="left" />
 	<c:url var="linkForm" value="/tweet/addTweet" />
-	<div id="pageheader" class="jumbotron text-center">
-		<h1>Aplikacja Twitterowa</h1>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-2">
-				<h3>Menu</h3>
-			</div>
-			<div class="col-sm-8">
-				<div class="conatiner-fluid" style="resize: none">
-					<button class="btn btn-info">Wszystkie wpisy</button>
+	
+	<t:mainLayout>
+		<jsp:body>
+			<div class="conatiner-fluid" style="resize: none">
+					<a class="btn btn-info" href="<c:url value="/tweet/showAll"/>">Wszystkie wpisy</a> 
 					<a class="btn btn-info" href="<c:url value="/tweet/userTweets"/>">Twoje Tweety</a>
-					<button class="btn btn-primary">Pokaż więcej</button>
 				</div>
 				<hr>
 				<div id="rcorners1" class="container-fluid">
@@ -59,11 +53,8 @@
 						<p>${tl.getText()}</p>
 					</div>
 				</c:forEach>
-			</div>
-			<div class="col-sm-2">
-				<p>Opcje</p>
-			</div>
-		</div>
-	</div>
+		</jsp:body>
+	</t:mainLayout>
+
 </body>
 </html>

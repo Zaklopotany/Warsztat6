@@ -19,51 +19,39 @@
 <body>
 	<c:url var="commentLink" value="/comment/addComment" />
 	
-	<div id="pageheader" class="jumbotron text-center">
-		<h1>Aplikacja Twitterowa</h1>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-2">
-				<h3>Menu</h3>
-			</div>
-			<div class="col-sm-8">
+	<t:mainLayout>
+		<jsp:body>
 				<div class="conatiner-fluid" style="resize: none">
 					<a class="btn btn-info" href="<c:url value="/tweet/showAll"/>">Wszystkie wpisy</a> 
 					<a class="btn btn-info" href="<c:url value="/tweet/userTweets"/>">Twoje Tweety</a>
 				</div>
 				<hr>
 				<div id="addComment">
-					<f:form method="post" action="${commentLink}" modelAttribute="comment">
-						<f:hidden value="${tweet.getUser().getId()}" path="user.id"/>
+					<f:form method="post" action="${commentLink}" modelAttribute="comments">
+						<f:hidden value="${mainUser.getId()}" path="user.id"/>
 						<f:hidden value="${tweet.getId()}" path="post.id"/>
 						<f:textarea path="text"/>
 						<input type="submit" class ="btn btm-success" value="Dodaj komentarz"/>
 						<f:errors path="*"/>
 					</f:form>
-				</div>
+				</div>	
 				<div id="rcorners1" class="conatiner-fluid">
 					<p>
-						<b>Dodany przez: </bs>${tweet.getUser().getUsername() }</p>
+						<b>Dodany przez: </b>${tweet.getUser().getUsername() }</p>
 					<p>
 						<b>Dodano: </b>${tweet.getCreated().toString().substring(0,19)}</p>
 					<p>${tweet.getText() }</p>
 				</div>
-				<c:forEach items="${comments}" var="c">
-					<div id="comments">
+				<c:forEach items="${allComments}" var="c">
+					<div id="commentsId">
 						<p>Komentarz użytkownika: ${c.getUser().getUsername() }</p>
 						<p>Dodano: ${c.getCreated().toString().substring(0,19)}
 						<p>${c.getText()}</p>
 					</div>
 				</c:forEach>
-
-				<p>usun liczba komentarzy itd.</p>
-			</div>
-			<div class="col-sm-2">
-				<p>Opcje</p>
-			</div>
-		</div>
-	</div>
-
+			
+		</jsp:body>
+	</t:mainLayout>
+	
 </body>
 </html>

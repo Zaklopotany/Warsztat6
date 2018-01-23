@@ -18,20 +18,12 @@
 </head>
 <body>
 	<c:url var="linkForm" value="/tweet/addTweetUser" />
-	<div id="pageheader" class="jumbotron text-center">
-		<h1>Aplikacja Twitterowa</h1>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-2">
-				<h3>Menu</h3>
-			</div>
-			<div class="col-sm-8">
+	
+	<t:mainLayout>
+		<jsp:body>
 				<div class="conatiner-fluid" style="resize: none">
-					<a class="btn btn-info" href="<c:url value="/tweet/showAll"/>">Wszystkie
-						wpisy</a> <a class="btn btn-info"
-						href="<c:url value="/tweet/userTweets"/>">Twoje Tweety</a>
-					<%-- 					<a class="btn btn-info" href="<c:url value="/tweet/showDetails/${ }"/>">Twoje Tweety</a> --%>
+					<a class="btn btn-info" href="<c:url value="/tweet/showAll"/>">Wszystkie wpisy</a> 
+					<a class="btn btn-info" href="<c:url value="/tweet/userTweets"/>">Twoje Tweety</a>
 				</div>
 
 				<hr>
@@ -52,11 +44,8 @@
 						<a class="btn btn-primary" href ="<c:url value="/tweet/details/${tl.getId()}"/>">Szczegóły</a>
 					</div>
 				</c:forEach>
-			</div>
-			<div class="col-sm-2">
-				<p>Opcje</p>
-			</div>
-		</div>
-	</div>
+		</jsp:body>
+	</t:mainLayout>
+	
 </body>
 </html>

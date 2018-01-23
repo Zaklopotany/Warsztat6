@@ -15,21 +15,31 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import pl.coderslab.entity.Comments;
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.CommentsRepository;
+import pl.coderslab.repository.TweetRepository;
 @RequestMapping(value="/comment")
 @Controller
 public class CommentController {
 	@Autowired
 	CommentsRepository commentsRep;
+	@Autowired
+	TweetRepository tweetRep;
 	
 	//add new comment 
-	@PostMapping("/addComment")
-	public String addComment(@Valid Comments comment, BindingResult result, Model model, @SessionAttribute(name ="user") User user1) {
-		if(result.hasErrors()) {
-			return "app/tweetDetails";
-		}
-		comment.setCreated(LocalDateTime.now());
-		commentsRep.save(comment);
-		return "redirect:/tweet/details/"+comment.getPost().getId();
-		
-	}
+			@PostMapping(path="/addComment")
+			public String addComment(@Valid Comments comments, BindingResult result, Model model, @SessionAttribute(name ="user", required=false) User user1) {
+				if(user1 == null) {
+					return "redirect:/user/login";
+				}
+				if(result.hasErrors()) {
+					model.addAttribute("mainUser", user1);
+//					model.addAttribute("comment", new Comments());
+					model.addAttribute("tweet", tweetRep.findOne(comments.getPost().getId())); 
+					model.addAttribute("allComments", commentsRep.findByPostIdOrderByCreatedDesc(comments.getPost().getId()));
+					return "app/tweetDetails";
+				}
+				comments.setCreated(LocalDateTime.now());
+				commentsRep.save(comments);
+				return "redirect:/tweet/details/"+comments.getPost().getId();
+				
+			}
 }

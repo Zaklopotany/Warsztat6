@@ -16,3 +16,19 @@ insert into Tweet (text,user_id,created) values ("kaszando123",5,NOW());
 insert into Tweet (text,user_id,created) values ("kaszandsdfgo",2,NOW());
 insert into Tweet (text,user_id,created) values ("kaszandsdfgo",1,NOW());
 
+insert into Message (readOrNot, text, user_id) values (true,'sdasafghasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (true,'sdasadfghasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (true,'sdasadfghasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (true,'sdasafghdfghasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (true,'sdasdfghaasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (true,'sdasfgaasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (true,'sdasadfghasdsdfdasd',1)
+
+insert into Message (readOrNot, text, user_id) values (false,'sdretasaasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (false,'sdaersaasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (false,'sdasaasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (false,'sdasergaasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (false,'sdreasaasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (false,'sdasaassdfgdsdfdasd',1)
+insert into Message (readOrNot, text, user_id) values (false,'sdertasaasdsdfdasd',1)
+

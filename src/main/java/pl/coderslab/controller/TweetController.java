@@ -94,15 +94,16 @@ public class TweetController {
 		return "app/userPage";
 	}
 	//show tweet details tweetDetails.jsp
-	@GetMapping("/details/{id}")
+	@GetMapping(path="/details/{id}")
 	public String showTweetDetails(@PathVariable(required = true) Long id, Model model, @SessionAttribute(name = "user", required = false) User user1) {
 		if(user1 == null) {
 			return "redirect:/user/login";
 		}
 		Tweet tweet = tweetRep.findById(id);
+		model.addAttribute("mainUser",user1);
 		model.addAttribute("tweet",tweet);
-		model.addAttribute("comments", commentsRep.findByPostIdOrderByCreatedDesc(id));
-		model.addAttribute("comment", new Comments());
+		model.addAttribute("allComments", commentsRep.findByPostIdOrderByCreatedDesc(id));
+		model.addAttribute("comments", new Comments());
 		return "app/tweetDetails";
 	}
 	

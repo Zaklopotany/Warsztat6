@@ -56,7 +56,7 @@ public class UserController {
 	//display register window
 	@GetMapping(path = "/register")
 	public String showRegisterForm(Model model) {
-		model.addAttribute("user", new User());
+		model.addAttribute("user", new User()) ;
 		return "user/register";
 	}
 	//get new user (register form)
