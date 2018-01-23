@@ -1,17 +1,15 @@
 package pl.coderslab.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import pl.coderslab.beans.Encoding;
 
 @Entity
 public class User {
@@ -35,8 +33,9 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
+/*	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
 	private List<Message> message;
+*/
 	// get set
 	public Long getId() {
 		return id;
@@ -59,7 +58,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = Encoding.encodePassToString(password);
 	}
 
 	public boolean isEnabled() {

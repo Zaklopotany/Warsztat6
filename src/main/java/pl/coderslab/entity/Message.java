@@ -2,8 +2,8 @@ package pl.coderslab.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,20 +18,27 @@ public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne(cascade = CascadeType.REMOVE)
-	@NotNull
+	@ManyToOne
+//	@NotNull
 	private User user;
+	
+	@ManyToOne
+//	 @NotNull
+	private User sender;
 	@NotEmpty
 	@NotNull
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String text;
-	private boolean readOrNot=false; // 0 if unread
+	private boolean readOrNot = false; // 0 if unread
 	private LocalDateTime created;
-	
-	//crator
+	private boolean isVisibleToSender = true;
+	private boolean isVisibleToUser = true;
+
+	// crator
 	public Message() {
-		
+
 	}
+
 	/// get set
 	public Long getId() {
 		return id;
@@ -40,7 +47,31 @@ public class Message {
 	public String getText() {
 		return text;
 	}
-	
+
+	public boolean getVisibleToSender() {
+		return isVisibleToSender;
+	}
+
+	public void setVisibleToSender(boolean isVisibleToSender) {
+		this.isVisibleToSender = isVisibleToSender;
+	}
+
+	public boolean getVisibleToUser() {
+		return isVisibleToUser;
+	}
+
+	public void setVisibleToUser(boolean isVisibleToUser) {
+		this.isVisibleToUser = isVisibleToUser;
+	}
+
+	public User getSender() {
+		return sender;
+	}
+
+	public Message setSender(User sender) {
+		this.sender = sender;
+		return this;
+	}
 
 	public LocalDateTime getCreated() {
 		return created;
@@ -62,8 +93,9 @@ public class Message {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public Message setUser(User user) {
 		this.user = user;
+		return this;
 	}
 
 	public boolean isRead() {

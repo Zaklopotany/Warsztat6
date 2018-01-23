@@ -11,7 +11,7 @@
 	color: white;
 }
 #pageheader {
-	background-color:red;
+	background-color:#ff7ae2;
 }
 textarea {
      width: 100%;
@@ -44,6 +44,13 @@ textarea {
     width: 100%;
     height: auto;
     margin-bottom:1em;
+}
+
+table.ex1 {
+    table-layout: auto;
+}
+ul {
+  list-style-type: none;
 }
 
 

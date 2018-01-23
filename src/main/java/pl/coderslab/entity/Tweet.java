@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -26,6 +27,8 @@ public class Tweet {
 	@NotEmpty
 	private String text;
 	private LocalDateTime created;
+	@Transient
+	private int commentsNumber; 
 
 	//creator
 	public Tweet() {
@@ -39,6 +42,16 @@ public class Tweet {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+
+	public int getCommentsNumber() {
+		return commentsNumber;
+	}
+
+	public Tweet setCommentsNumber(int commentsNumber) {
+		this.commentsNumber = commentsNumber;
+		return this;
 	}
 
 	public User getUser() {

@@ -18,6 +18,10 @@
 <body>
 
 	<t:mainLayout>
+		<jsp:attribute name="submenu">
+			<h3>Akcja</h3>
+			<a href="<c:url value="/message/sendMessage/${user.getId()}"/>">Wyślij wiadomość</a>
+		</jsp:attribute>
 		<jsp:body>
 			<div class="conatiner-fluid" style="resize: none">	
 				<a class="btn btn-info" href="<c:url value="/tweet/showAll"/>">Wszystkie wpisy</a> 

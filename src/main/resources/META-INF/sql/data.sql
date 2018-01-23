@@ -16,19 +16,37 @@ insert into Tweet (text,user_id,created) values ("kaszando123",5,NOW());
 insert into Tweet (text,user_id,created) values ("kaszandsdfgo",2,NOW());
 insert into Tweet (text,user_id,created) values ("kaszandsdfgo",1,NOW());
 
-insert into Message (readOrNot, text, user_id) values (true,'sdasafghasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (true,'sdasadfghasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (true,'sdasadfghasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (true,'sdasafghdfghasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (true,'sdasdfghaasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (true,'sdasfgaasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (true,'sdasadfghasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (true,'sdasafghasdsdfdasd',1,2,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (true,'sdasadfghasdsdfdasd',1,3,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (true,'sdasadfghasdsdfdasd',1,4,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (true,'sdasafghdfghasdsdfdasd',1,5,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (true,'sdasdfghaasdsdfdasd',1,2,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (true,'sdasfgaasdsdfdasd',1,3,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (true,'sdasadfghasdsdfdasd',1,4,NOW(),1,1)
 
-insert into Message (readOrNot, text, user_id) values (false,'sdretasaasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (false,'sdaersaasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (false,'sdasaasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (false,'sdasergaasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (false,'sdreasaasdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (false,'sdasaassdfgdsdfdasd',1)
-insert into Message (readOrNot, text, user_id) values (false,'sdertasaasdsdfdasd',1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdretasaasdsdfdasd',1,2,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdaersaasdsdfdasd',1,3,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdasaasdsdfdasd',1,3,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdasergaasdsdfdasd',1,4,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdreasaasdsdfdasd',1,2,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdasaassdfgdsdfdasd',1,5,NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdertasaasdsdfdasd',1,4,NOW(),1,1)
 
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdfgsdfgsdasaasssssssssssdfasdfwerwerwerwersasdfasfgsdfgssssssssssssssssssssssssssssssssssssssssssssdsasdasdsadasdsdsdfdasd',2,1, NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdfgsdfgsdasaasssssssssssdfasdfwerwerwerwersasdfasfgsdfgssssssssssssssssssssssssssssssssssssssssssssdsasdasdsadasdsdsdfdasd',2,1, NOW(),1,1)
+insert into Message (readOrNot, text, user_id,sender_id,created,isVisibleToSender,isVisibleToUser) values (false,'sdfgsdfgsdasaasssssssssssdfasdfwerwerwerwersasdfasfgsdfgssssssssssssssssssssssssssssssssssssssssssssdsasdasdsadasdsdsdfdasd',2,1, NOW(),1,1)
+
+insert into Comments (created, text, post_id,user_id) value (NOW(), "dfto jest komentarz", 1,1);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "dfgto asdfjest komentarz", 1,2);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "toasdf jest komentarz", 2,3);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "tdfgo jdfgest komentarz", 7,4);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "tsdfgo jest komentarz", 6,5);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "tgdfodf vsdfjest komentarz", 1,2);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "tdfgo jest komentarz", 3,2);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "togsd jest komentarz", 8,3);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "tofdg jest komentarz", 9,4);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "to1232123 jest komentarz", 3,5);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "todsfg jest komentarz", 4,1);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "tdfgo jest komentarz", 5,2);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "1231to jest komentarz", 6,3);
+insert into Comments (created, text, post_id,user_id) value (NOW(), "3232to jest komentarz", 7,4);

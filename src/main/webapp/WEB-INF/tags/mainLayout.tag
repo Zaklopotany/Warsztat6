@@ -6,8 +6,9 @@
 <%@attribute name="option" fragment="true"%>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -26,16 +27,13 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-2">
+			<div class="col-sm-2 text-center">
 				<h3>Menu</h3>
-				<ul>
-					<li>Wszystkie wpisy</li>
-					<li>Twoje posty</li>
-					<li><a href="<c:url value="/message/showMailBox"/>">Wiadomości</a></li>
-					<li>Ustawienia</li>
-					<li>Wyloguj</li>
-					
-				</ul>
+					<a href="<c:url value="/tweet/showAll"/>">Wszystkie wpisy</a><br>
+					<a href="<c:url value="/tweet/userTweets"/>">Twoje posty</a><br>
+					<a href="<c:url value="/message/showMailBox"/>">Wiadomości</a><br>
+					<a href="<c:url value="/user/settings"/>">Ustawienia</a><br>
+					<a href="<c:url value="/user/logout"/>">Wyloguj</a><br>
 				<jsp:invoke fragment="menu" />
 				<jsp:invoke fragment="submenu" />
 			</div>

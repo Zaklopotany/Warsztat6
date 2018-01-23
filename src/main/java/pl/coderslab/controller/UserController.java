@@ -2,6 +2,7 @@ package pl.coderslab.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import pl.coderslab.beans.Encoding;
 import pl.coderslab.entity.Tweet;
@@ -42,9 +44,9 @@ public class UserController {
 	}
 	//login form, get user - authentication
 	@PostMapping(path = "/login")
-	public String processLoginRequest(@RequestParam("username") String username,
+	public String processLoginRequest(@RequestParam("email") String email,
 			@RequestParam("password") String password, Model model, HttpSession ses) {
-		User user = userRepository.findOneByUsernameAndPassword(username, Encoding.encodePassToString(password));
+		User user = userRepository.findOneByEmailAndPassword(email, Encoding.encodePassToString(password));
 		if (user != null) {
 			ses.setAttribute("user", user);
 			model.addAttribute("tweet", new Tweet());
@@ -65,7 +67,7 @@ public class UserController {
 		if (bresult.hasErrors()) {
 			return "user/register";
 		} else {
-			user.setPassword(Encoding.encodePassToString(user.getPassword()));
+			user.setPassword(user.getPassword());
 			try {
 				userRepository.save(user);
 			} catch (org.springframework.orm.jpa.JpaSystemException ex) {
@@ -85,6 +87,44 @@ public class UserController {
 			return "redirect:user/login";
 		}
 	}
-
+	
+	//logout user
+	@GetMapping("/logout")
+	public String logoutUser(HttpSession ses) {
+		ses.setAttribute("user", null);
+		return "redirect:/user/login";
+	}
+	//user Settings //send to user change password site
+	@GetMapping("/settings")
+	public String settings(Model model, @SessionAttribute(name = "user", required = false) User user1) {
+		if (user1 == null) {
+			return "redirect:/user/login";
+		}
+		model.addAttribute("user", user1);
+		return "user/settings";
+	}
+	
+	//change user data
+	@PostMapping("/settings")
+	public String getUserData(HttpServletRequest request,@SessionAttribute("user") User user1, Model model) {
+		if(user1 == null) {
+			return "redirect:/user/login";
+		}
+		try {
+			user1.setUsername(request.getParameter("username"));
+			if (request.getParameter("password").length() > 0) {
+				user1.setPassword(request.getParameter("password"));				
+			}
+			userRepository.save(user1);
+		} catch (org.springframework.orm.jpa.JpaSystemException ex) {
+				String invalidName = "Ta nazwa uzytkownika jest już zajęta";
+				model.addAttribute("invalidName", invalidName);
+			return "user/settings";
+		}
+		model.addAttribute("invalidName", null);
+		return "redirect:/user/settings";
+		
+	}
+	
 
 }

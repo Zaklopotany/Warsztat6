@@ -2,6 +2,7 @@ package pl.coderslab.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -44,7 +45,9 @@ public class TweetController {
 		if(user1 == null) {
 			return "redirect:/user/login";
 		}
-		model.addAttribute("tweetList", loadAllTweets());
+		List<Tweet> tweetList = loadAllTweets();
+		tweetList = tweetList.stream().map(s -> s = s.setCommentsNumber(commentsRep.countByPostId(s.getId()))).collect(Collectors.toList());
+		model.addAttribute("tweetList", tweetList);
 		model.addAttribute("user", user1);
 		model.addAttribute("tweet", new Tweet());		
 		return "app/mainPage";

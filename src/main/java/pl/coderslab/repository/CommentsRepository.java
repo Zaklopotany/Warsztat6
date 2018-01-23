@@ -9,5 +9,6 @@ import pl.coderslab.entity.Comments;
 @Repository
 public interface CommentsRepository extends JpaRepository<Comments, Long>{
  	List<Comments> findByPostIdOrderByCreatedDesc(Long id);
+ 	int countByPostId(Long id);
 	
 }

@@ -51,6 +51,7 @@
 						<a style="float: left" href="<c:url value="/tweet/oneUserTweet/${tl.getUser().getId()}"/>"><b>${tl.getUser().getUsername()}</b></a> <a style="float: right">${tl.getCreated().toString().substring(0,19)}</a>
 						<br>
 						<p>${tl.getText()}</p>
+						<a href ="<c:url value="/tweet/details/${tl.getId()}"/>">Liczba komentarzy: ${tl.getCommentsNumber()}</a>
 					</div>
 				</c:forEach>
 		</jsp:body>

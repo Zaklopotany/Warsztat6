@@ -15,7 +15,7 @@
 	<div class="center">
 		<form action="login" method="post">
 			<div>
-				Login: <input type="text" name="username" />
+				Email: <input type="text" name="email" />
 			</div>
 			<div>
 				Hasło: <input type="password" name="password" />
