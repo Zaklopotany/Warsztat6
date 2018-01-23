@@ -50,7 +50,7 @@ public class UserController {
 		if (user != null) {
 			ses.setAttribute("user", user);
 			model.addAttribute("tweet", new Tweet());
-			return "app/mainPage";
+			return "redirect:/tweet/showAll";
 		} else {
 			return "user/login";
 		}
