@@ -42,9 +42,6 @@ public class TweetController {
 	//show all tweets on main page
 	@GetMapping("/showAll")
 	public String showAllTweets(@SessionAttribute(name = "user", required = false) User user1, Model model) {
-		/*if(user1 == null) {
-			return "redirect:/user/login";
-		}*/
 		List<Tweet> tweetList = loadAllTweets();
 		tweetList = tweetList.stream().map(s -> s = s.setCommentsNumber(commentsRep.countByPostId(s.getId()))).collect(Collectors.toList());
 		model.addAttribute("tweetList", tweetList);
@@ -54,10 +51,7 @@ public class TweetController {
 	}
 	//form post method add tweet
 	@PostMapping("addTweet")
-	public String getTeet(@Valid Tweet tweet, BindingResult result, @SessionAttribute(name = "user", required = false) User user1, Model model) {
-		if(user1 == null) {
-			return "redirect:/user/login";
-		}
+	public String getTeet(@Valid Tweet tweet, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return "app/mainPage";
 		} else {
@@ -71,9 +65,6 @@ public class TweetController {
 	//show logged user tweets 
 	@GetMapping("/userTweets")
 	public String showAllUserTweets(@SessionAttribute(name = "user", required = false) User user1, Model model) {
-		if(user1==null) {
-			return "redirect:/user/login";
-		}
 		model.addAttribute("tweet", new Tweet());
 		model.addAttribute("user1", user1);
 		model.addAttribute("userTweets", tweetRep.findByUserOrderByCreatedDesc(user1));
@@ -82,9 +73,6 @@ public class TweetController {
 	//add tweet userPage form
 	@PostMapping("addTweetUser")
 	public String getTweetUser(@Valid Tweet tweet, BindingResult result, @SessionAttribute(name = "user", required = false) User user1, Model model) {
-		if(user1 == null) {
-			return "redirect:/user/login";
-		}
 		if(result.hasErrors()) {
 			return "app/userPage";
 		} else {
@@ -99,9 +87,6 @@ public class TweetController {
 	//show tweet details tweetDetails.jsp
 	@GetMapping(path="/details/{id}")
 	public String showTweetDetails(@PathVariable(required = true) Long id, Model model, @SessionAttribute(name = "user", required = false) User user1) {
-		if(user1 == null) {
-			return "redirect:/user/login";
-		}
 		Tweet tweet = tweetRep.findById(id);
 		model.addAttribute("mainUser",user1);
 		model.addAttribute("tweet",tweet);
@@ -112,10 +97,8 @@ public class TweetController {
 	
 	//redirect to specific user tweets page
 	@GetMapping("/oneUserTweet/{id}")
-	public String showOnlyOneUserTweets(@PathVariable Long id, Model model,@SessionAttribute(name = "user", required = false) User user1) {
-		if(user1 == null) {
-			return "redirect:/user/login";
-		}
+	public String showOnlyOneUserTweets(@PathVariable Long id, Model model) {
+
 		model.addAttribute("user", userRep.findOne(id));
 		model.addAttribute("tweet", new Tweet());
 		model.addAttribute("tweetList", tweetRep.findByUserId(id));

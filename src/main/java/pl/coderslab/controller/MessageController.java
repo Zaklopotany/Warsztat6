@@ -35,9 +35,6 @@ public class MessageController {
 	// show sent messages
 	@GetMapping("/showSentMessage")
 	public String showSentMessage(Model model, @SessionAttribute(name = "user", required = false) User user1) {
-		if (user1 == null) {
-			return "redirect:/user/login";
-		}
 		model.addAttribute("sentMessageList", messageRep.allVisibleToSender(user1, true));
 		return "message/userSentMessage";
 	}
@@ -45,9 +42,6 @@ public class MessageController {
 	// show received read and unread messages
 	@GetMapping("/showMailBox")
 	public String showMailBox(Model model, @SessionAttribute(name = "user", required = false) User user1) {
-		if (user1 == null) {
-			return "redirect:/user/login";
-		}
 		model.addAttribute("messageList", messageRep.allVisibleToUserRoN(user1, true, false));
 		model.addAttribute("messageListRead", messageRep.allVisibleToUserRoN(user1, true, true));
 		return "message/userMessage";
@@ -57,9 +51,6 @@ public class MessageController {
 	@GetMapping("/sendMessage/{id}")
 	public String sendMessage(@PathVariable Long id, Model model,
 			@SessionAttribute(name = "user", required = false) User user1) {
-		if (user1 == null) {
-			return "redirect:/user/login";
-		}
 		User tempUser = userRep.findOne(id);
 		model.addAttribute("message", new Message().setSender(user1).setUser(tempUser)); // for binding purpose
 		return "message/sendMessage";
@@ -68,9 +59,6 @@ public class MessageController {
 	// open form where id of user is not specified
 	@GetMapping("/sendMessage")
 	public String sendMessageUnknownUser(Model model, @SessionAttribute(name = "user", required = false) User user1) {
-		if (user1 == null) {
-			return "redirect:/user/login";
-		}
 		model.addAttribute("message", new Message().setSender(user1)); // for binding purpose
 		return "message/sendMessageUnknown";
 	}
@@ -81,9 +69,6 @@ public class MessageController {
 			@SessionAttribute(name = "user", required = false) User user1) {
 		User tempUser = userRep.findOne(message.getUser().getId());
 		model.addAttribute("message", new Message().setSender(user1).setUser(tempUser)); // for binding purpose
-		if(user1 == null) {
-			return "redirect:/user/login";
-		}
 		if (result.hasErrors()) {
 			return "message/sendMessage";
 		} else if (message.getUser().getId() == user1.getId()) {
@@ -103,9 +88,6 @@ public class MessageController {
 	@PostMapping("/sendMessageUnknown")
 	public String sendNewMessageUnknown(@Valid Message message, BindingResult result, Model model,
 			@SessionAttribute(name = "user", required = false) User user1) {
-		if(user1 == null) {
-			return "redirect:/user/login";
-		}
 		if (result.hasErrors()) {
 			return "message/sendMessageUnknown";
 		} else if (message.getUser().getId() == user1.getId()) {
@@ -124,9 +106,6 @@ public class MessageController {
 	//getting recipient id
 	@GetMapping("/sendMessageUnknown/{id}")
 	public String sendMessageUnknownId(@PathVariable Long id, Model model, @SessionAttribute(name = "user", required = false) User user1) {
-		if (user1 == null ) {
-			return "redirect:/user/login";
-		}
 		model.addAttribute("user", userRep.findOneById(id));
 		model.addAttribute("message", new Message().setSender(user1));
 		return "message/sendMessageUnknown";
@@ -136,9 +115,7 @@ public class MessageController {
 	//get user sendMessageUnknown
 	@PostMapping("/sendMessageUnknown/getUser")
 	public String getUserList(Model model, @RequestParam("name") String name, @SessionAttribute(name = "user", required = false) User user1) {
-		if (user1 == null ) {
-			return "redirect:/user/login";
-		}
+
 		model.addAttribute("message", new Message().setSender(user1)); // for binding purpose
 		List<User> userList = new ArrayList<>();
 		if(name.length() > 0) {
@@ -159,11 +136,7 @@ public class MessageController {
 	
 	// show message details
 	@GetMapping("/messageDetails/{id}")
-	public String showMessageDetails(@PathVariable Long id, Model model,
-			@SessionAttribute(name = "user", required = false) User user1) {
-		if (user1 == null) {
-			return "redirect:/user/login";
-		}
+	public String showMessageDetails(@PathVariable Long id, Model model) {
 		Message tempMessage = messageRep.findOne(id);
 		tempMessage.setRead(true);
 		messageRep.save(tempMessage);
@@ -174,9 +147,6 @@ public class MessageController {
 	//delete, checked messages
 	@PostMapping("/modifyMessage/delete")
 	public String deleteCheckedMessage(HttpServletRequest request, @SessionAttribute(name = "user", required = false) User user1) {
-		if(user1==null) {
-			return "redirect:/user/login";
-		}
 		String[] check = request.getParameterValues("check");
 		if(check != null) {
 			for (int i = 0; i< check.length; i++) {
@@ -190,9 +160,6 @@ public class MessageController {
 	//read checked messages
 	@PostMapping("/modifyMessage/read")
 	public String readCheckedMessage(HttpServletRequest request, @SessionAttribute(name = "user", required = false) User user1) {
-		if(user1==null) {
-			return "redirect:/user/login";
-		}
 		String[] check = request.getParameterValues("check");
 		if (check != null) {
 			for (int i = 0; i< check.length; i++) {
@@ -206,9 +173,6 @@ public class MessageController {
 	//unread checked messages
 	@PostMapping("/modifyMessage/unread")
 	public String unreadCheckedMessage(HttpServletRequest request, @SessionAttribute(name = "user", required = false) User user1) {
-		if(user1==null) {
-			return "redirect:/user/login";
-		}
 		String[] check = request.getParameterValues("check");
 		if (check != null) {
 			for (int i = 0; i< check.length; i++) {
@@ -223,9 +187,6 @@ public class MessageController {
 	//delete sent message (make it invisible for the sender)
 	@PostMapping("/modifySentMessage")
 	public String modifySentMessage(HttpServletRequest request, @SessionAttribute(name = "user", required = false) User user1) {
-		if(user1 == null) {
-			return "redirect:/user/login";
-		}
 		String[] parameters = request.getParameterValues("check");
 		if(parameters != null) {
 			for(int i =0; i < parameters.length; i++) {
