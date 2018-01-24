@@ -26,19 +26,51 @@
 		</jsp:attribute>
 		<jsp:body>
 			<div>
-				<h2> Wiadomość do użytkownika: ${message.getUser().getUsername()}</h2>
+				<form action="<c:url value="/message/sendMessageUnknown/getUser"/>" method="post">
+					<input type="text" name="name"/>
+					<input type="submit" value="Wyszukaj użytkownika"/>
+				</form>
+				<c:if test="${lackOfUsername != null }">
+					${lackOfUsername}
+				</c:if>
+				<c:if test="${user != null }">
+					<h2> Wiadomość do użytkownika: ${user.getUsername()}</h2>	
+				</c:if>
 				<f:form action="${linkMessage}" method="post" modelAttribute="message">
-					Podaj id odbiorcy: <f:input path="user.id"/><br>
+					<c:if test="${user != null }">
+						<f:hidden path="user.id" value="${user.getId()}"/>
+					</c:if>
 					<f:hidden path="sender.id" value="${message.getSender().getId() }"/>
 					<f:textarea path="text"/>
 					<input type="submit" value="Wyślij wiadomość"/>
 					<f:errors path="*"/>
 				</f:form>
-				<c:if test="${userError == true }">
-				<p> Nie możeszy wysłać wiadomości do samego siebie!!!</p>
+				<c:if test="${userError == true}">
+					<p> Nie możeszy wysłać wiadomości do samego siebie!!!</p>
 				</c:if>
 				<c:if test="${userCheat == true }">
 					<p> Nie bądź taki chytry, za kradzież tożsamości jest od 2 do 5 lat</p>
+				</c:if>
+			</div>
+			<div>
+				<c:if test="${userList != null }">
+					<table class="table ex2">
+						<thead>
+							<tr>
+								<th>Id użytkownika</th>
+								<th>Nazwa użytkownika</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:forEach items="${userList}" var="ul">
+							<tr>
+								<td>${ul.getId()}</td>
+								<td>${ul.getUsername()}</td>
+								<td><a href="<c:url value="/message/sendMessageUnknown/${ul.getId()}"/>" class="btn btn-success">Wybierz</a></td>
+							</tr>
+						</c:forEach>
+						</tbody>
+					</table>
 				</c:if>
 			</div>
 		</jsp:body>

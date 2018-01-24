@@ -3,7 +3,6 @@ package pl.coderslab.entity;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,13 +12,16 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import pl.coderslab.validator.UserMessageExist;
+
 @Entity
 public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
-//	@NotNull
+	@NotNull
+//	@UserMessageExist
 	private User user;
 	
 	@ManyToOne

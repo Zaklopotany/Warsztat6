@@ -36,6 +36,9 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 	@Query("Select m from Message m where m.user =:user and m.isVisibleToUser =:isVisible and readOrNot =:readBool order by created desc")
 	List<Message> allVisibleToUserRoN(@Param("user") User user, @Param("isVisible") boolean isVisible, @Param("readBool") boolean readBool);
 	
+	@Query("Select m from Message m where m.user =:user and m.id =:id")
+	Message UserIdMessage(@Param("user") User user, @Param("id") Long id);
+	
 	List<Message> findByUserIdOrderByCreatedDesc(Long id);
 	List<Message> findBySenderIdOrderByCreatedDesc(Long id);
 	

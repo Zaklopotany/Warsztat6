@@ -4,25 +4,29 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.UserRepository;
 
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+public class UserMessageExistValidator implements ConstraintValidator<UserMessageExist, User>{
+	
 	@Autowired
 	UserRepository userRep;
+	
+	private User userTemp;
+	
 	@Override
-	public void initialize(UniqueEmail email) {
+	public void initialize(UserMessageExist user) {		
 	}
 
 	@Override
-	public boolean isValid(String email, ConstraintValidatorContext arg1) {
-		User tempUser = userRep.findOneByEmail(email);
-		if(tempUser == null) {
+	public boolean isValid(User user, ConstraintValidatorContext arg1) {
+		userTemp = userRep.findOneById(user.getId());
+		if (userTemp != null) {
 			return true;
 		} else {
-			return false;			
+			return false;
 		}
 	}
+
 }

@@ -49,9 +49,19 @@ textarea {
 table.ex1 {
     table-layout: auto;
 }
+table.ex2 {
+    table-layout: auto;
+    width:60%;
+}
 ul {
   list-style-type: none;
 }
+
+#button-panel {
+	display:inline-block;
+ 	float:left;
+}
+
 
 
 

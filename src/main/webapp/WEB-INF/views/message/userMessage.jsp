@@ -23,11 +23,14 @@
 		</jsp:attribute>
 		<jsp:body>
 			<div class="container-fluid">
-				<form id = "formMessage" action="<c:url value="/message/modifyMessage"/>" method="post">
-					<button type="submit" form="formMessage" class="btn btn-danger"  name="action" value="delete">Usun</button>
-					<button type="submit" form="formMessage" class="btn btn-primary"  name="action" value="read">Oznacz jako przeczytane</button>
-					<button type="submit" form="formMessage" class="btn btn-primary"  name="action" value="unread">Oznacz jako nieprzeczytane</button>
-				</form>	
+				<div id="button-panel">
+					<form id = "formMessage" action="<c:url value="/message/modifyMessage/delete"/>" method="post">
+						<button type="submit"  class="btn btn-danger"  name="action" value="delete">Usun</button>
+						<button type="submit"  class="btn btn-primary" formaction="<c:url value="/message/modifyMessage/read"/>" name="action" value="read">Oznacz jako przeczytane</button>
+						<button type="submit"  class="btn btn-primary" formaction="<c:url value="/message/modifyMessage/unread"/>" name="action" value="unread">Oznacz jako nieprzeczytane</button>
+
+					</form>	
+				</div>
 				<table class="table ex1">
 					<thead>
 						<tr>
