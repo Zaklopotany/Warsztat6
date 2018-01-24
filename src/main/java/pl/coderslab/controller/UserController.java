@@ -66,26 +66,8 @@ public class UserController {
 	public String processRegistartionRequest(@Valid User user, BindingResult bresult, Model model) {
 		if (bresult.hasErrors()) {
 			return "user/register";
-		} else {
-			user.setPassword(user.getPassword());
-			try {
-				userRepository.save(user);
-			} catch (org.springframework.orm.jpa.JpaSystemException ex) {
-				String message = ex.getMostSpecificCause().toString();
-				String[] messageArr = message.split("'");
-				if (messageArr[1].contains("@")) {
-					String invalidEmail = "Konto z podanym emailem już istnieje";
-					model.addAttribute("invalidEmail", invalidEmail);
-				} else {
-					String invalidName = "Ta nazwa uzytkownika jest już zajęta";
-					model.addAttribute("invalidName", invalidName);
-				}
-				return "user/register";
-			}
-			model.addAttribute("invalidName", null);
-			model.addAttribute("invalidEmail", null);
-			return "redirect:user/login";
-		}
+		} 
+		return "redirect:/user/login";		
 	}
 	
 	//logout user
@@ -94,7 +76,6 @@ public class UserController {
 		ses.setAttribute("user", null);
 		return "redirect:/user/login";
 	}
-	//user Settings //send to user change password site
 	@GetMapping("/settings")
 	public String settings(Model model, @SessionAttribute(name = "user", required = false) User user1) {
 		if (user1 == null) {
@@ -110,6 +91,8 @@ public class UserController {
 		if(user1 == null) {
 			return "redirect:/user/login";
 		}
+		
+		//refactor form:form modelAttribute
 		try {
 			user1.setUsername(request.getParameter("username"));
 			if (request.getParameter("password").length() > 0) {

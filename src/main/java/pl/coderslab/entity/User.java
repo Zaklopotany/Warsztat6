@@ -5,11 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import pl.coderslab.beans.Encoding;
+import pl.coderslab.validator.UniqueEmail;
+import pl.coderslab.validator.UniqueName;
 
 @Entity
 public class User {
@@ -20,9 +23,11 @@ public class User {
 
 	@NotEmpty
 	@Column(nullable = false, unique = true)
+	@UniqueName
 	private String username;
 
 	@NotEmpty
+	@Size(min=4)
 	@Column(nullable = false)
 	private String password;
 
@@ -31,6 +36,7 @@ public class User {
 	@NotEmpty
 	@Email
 	@Column(nullable = false, unique = true)
+	@UniqueEmail
 	private String email;
 
 /*	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)

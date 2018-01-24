@@ -56,6 +56,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
           .addResourceHandler("/resources/**")
           .addResourceLocations("/resources/"); 
     }
+	
 	@Bean(name="localeResolver")
 	public LocaleContextResolver getLocaleContextResolver() {
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
