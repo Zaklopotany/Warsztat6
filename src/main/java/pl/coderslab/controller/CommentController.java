@@ -27,9 +27,6 @@ public class CommentController {
 	//add new comment 
 			@PostMapping(path="/addComment")
 			public String addComment(@Valid Comments comments, BindingResult result, Model model, @SessionAttribute(name ="user", required=false) User user1) {
-				if(user1 == null) {
-					return "redirect:/user/login";
-				}
 				if(result.hasErrors()) {
 					model.addAttribute("mainUser", user1);
 //					model.addAttribute("comment", new Comments());

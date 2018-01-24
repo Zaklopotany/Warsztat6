@@ -3,6 +3,7 @@ package pl.coderslab.conf;
 import java.util.Locale;
 
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.Filter;
 import javax.validation.Validator;
 
 import org.springframework.context.annotation.Bean;
@@ -22,12 +23,21 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import pl.coderslab.filter.AuthenticationFilter;
+
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"pl.coderslab.beans", "pl.coderslab.controller"})
+@ComponentScan(basePackages = {"pl.coderslab.filter", "pl.coderslab.beans", "pl.coderslab.controller"})
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "pl.coderslab.repository")
+	
 public class AppConfiguration extends WebMvcConfigurerAdapter {
+	
+	@Bean
+	public Filter authenticationFilter() {
+	    AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+	    return authenticationFilter;
+	}
 	
 	@Bean
 	public LocalEntityManagerFactoryBean entityManagerFactory() {

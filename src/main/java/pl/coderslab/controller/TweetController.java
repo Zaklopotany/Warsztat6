@@ -42,9 +42,9 @@ public class TweetController {
 	//show all tweets on main page
 	@GetMapping("/showAll")
 	public String showAllTweets(@SessionAttribute(name = "user", required = false) User user1, Model model) {
-		if(user1 == null) {
+		/*if(user1 == null) {
 			return "redirect:/user/login";
-		}
+		}*/
 		List<Tweet> tweetList = loadAllTweets();
 		tweetList = tweetList.stream().map(s -> s = s.setCommentsNumber(commentsRep.countByPostId(s.getId()))).collect(Collectors.toList());
 		model.addAttribute("tweetList", tweetList);
