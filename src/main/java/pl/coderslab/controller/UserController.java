@@ -67,6 +67,7 @@ public class UserController {
 		if (bresult.hasErrors()) {
 			return "user/register";
 		} 
+		userRepository.save(user);
 		return "redirect:/user/login";		
 	}
 	
